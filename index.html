@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio - Mahasiswa Informatika</title>
+    <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-maroon: #893941;
+            --rose-accent: #CB7885;
+            --sage-light: #D4D994;
+            --olive-dark: #5E6623;
+            --bg-body: #f7f6f2;
+            --card-white: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-image: radial-gradient(#D4D994 0.8px, transparent 0.8px);
+            background-size: 20px 20px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Navigasi Header */
+        header {
+            background: var(--primary-maroon);
+            color: #fff;
+            padding: 14px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--sage-light);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1050px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--sage-light);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 12px;
+            align-items: center;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 7px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: var(--rose-accent);
+        }
+
+        .btn-edit-mode {
+            background: var(--sage-light);
+            color: var(--olive-dark);
+            border: none;
+            padding: 7px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit-mode:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Container Layout */
+        .container {
+            max-width: 1050px;
+            margin: 110px auto 40px;
+            padding: 0 20px;
+        }
+
+        section {
+            background: var(--card-white);
+            margin-bottom: 35px;
+            padding: 35px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(137, 57, 65, 0.05);
+            border: 1px solid rgba(212, 217, 148, 0.4);
+        }
+
+        h2 {
+            color: var(--primary-maroon);
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2.5px solid var(--sage-light);
+            padding-bottom: 10px;
+        }
+
+        /* Mode Edit Outline */
+        .edit-active [contenteditable="true"] {
+            outline: 2px dashed var(--rose-accent);
+            background-color: #fff8f9;
+            padding: 2px 6px;
+            border-radius: 6px;
+        }
+
+        /* About Section */
+        .profile-container {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            flex-wrap: wrap;
+        }
+
+        .profile-img-wrapper {
+            position: relative;
+            width: 170px;
+            height: 170px;
+            flex-shrink: 0;
+            margin: 0 auto;
+        }
+
+        .profile-img-box {
+            width: 100%;
+            height: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            background-color: var(--primary-maroon);
+            border: 4px solid var(--rose-accent);
+            box-shadow: 0 10px 20px rgba(203, 120, 133, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .profile-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .upload-btn {
+            position: absolute;
+            bottom: -6px;
+            right: -6px;
+            background: var(--olive-dark);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+
+        .upload-btn:hover {
+            transform: scale(1.1);
+            background: var(--primary-maroon);
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .info-card {
+            background: #faf9f5;
+            padding: 12px 18px;
+            border-radius: 14px;
+            border-left: 5px solid var(--olive-dark);
+        }
+
+        /* STYLING HIGHLIGHT NAMA MEMANJANG DIPILIH KE BARIS PERTAMA */
+        .info-card.highlight-name {
+            grid-column: 1 / -1;
+            background: #fdfbf7;
+            border-left: 6px solid var(--primary-maroon);
+            padding: 16px 20px;
+        }
+
+        .info-card.highlight-name span {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .info-card strong {
+            display: block;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-card span {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--primary-maroon);
+        }
+
+        .profile-bio {
+            background: #faf8f3;
+            padding: 18px;
+            border-radius: 16px;
+            border: 1px solid #eee;
+        }
+
+        /* --- LEVEL 1: MAIN TABS --- */
+        .main-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .main-btn {
+            padding: 10px 24px;
+            border-radius: 25px;
+            border: 2px solid var(--primary-maroon);
+            background: #faf9f5;
+            color: var(--primary-maroon);
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .main-btn.active {
+            background: var(--primary-maroon);
+            color: white;
+            box-shadow: 0 4px 12px rgba(137, 57, 65, 0.25);
+        }
+
+        /* --- LEVEL 2: SUB FILTERS --- */
+        .sub-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #faf9f3;
+            border-radius: 18px;
+            border: 1px solid #eae8dc;
+        }
+
+        .sub-btn {
+            background: #ffffff;
+            border: 1.5px solid var(--sage-light);
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--olive-dark);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sub-btn.active, .sub-btn:hover {
+            background: var(--olive-dark);
+            color: white;
+            border-color: var(--olive-dark);
+        }
+
+        /* Grid Kartu Skill */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 18px;
+            border: 1px solid #f0efe8;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(137, 57, 65, 0.08);
+            border-color: var(--rose-accent);
+        }
+
+        .skill-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .skill-icon {
+            width: 48px;
+            height: 48px;
+            background: #f8f7f2;
+            color: var(--primary-maroon);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            border: 1px solid var(--sage-light);
+            flex-shrink: 0;
+        }
+
+        .skill-title h3 {
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            line-height: 1.2;
+            margin-bottom: 2px;
+        }
+
+        .skill-title span {
+            font-size: 0.75rem;
+            color: var(--olive-dark);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* Achievement Section */
+        .achievement-card {
+            border: 1px solid #f0efe8;
+            border-radius: 18px;
+            padding: 24px;
+            margin-bottom: 20px;
+            background-color: #ffffff;
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+
+        .achievement-content {
+            flex: 2;
+            min-width: 240px;
+        }
+
+        .achievement-content h3 {
+            color: var(--primary-maroon);
+            margin-bottom: 6px;
+            font-size: 1.2rem;
+        }
+
+        .achievement-meta {
+            font-size: 0.85rem;
+            color: var(--olive-dark);
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: inline-block;
+            background: #f4f6ec;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .achievement-img-box {
+            position: relative;
+            flex: 1;
+            min-width: 200px;
+            max-width: 260px;
+            height: 140px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 2px solid var(--sage-light);
+            cursor: pointer;
+        }
+
+        .achievement-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .achievement-img-box:hover img {
+            transform: scale(1.05);
+        }
+
+        .upload-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(30, 41, 59, 0.8);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+
+        /* Contact Section */
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background-color: var(--rose-accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(203, 120, 133, 0.25);
+        }
+
+        .contact-btn:hover {
+            background-color: var(--primary-maroon);
+            transform: translateY(-2px);
+        }
+
+        .contact-btn.olive {
+            background-color: var(--olive-dark);
+            box-shadow: 0 4px 12px rgba(94, 102, 35, 0.25);
+        }
+
+        .contact-btn.olive:hover {
+            background-color: #434919;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 480px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 12px;
+            border: 4px solid white;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: var(--text-muted);
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: var(--primary-maroon);
+            color: #fff;
+            margin-top: 50px;
+            font-size: 0.9rem;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container, .achievement-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .achievement-img-box {
+                max-width: 100%;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigasi Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fa-solid fa-code"></i> Portofolio Saya
+            </div>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#achievement">Achievement</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container" id="main-content">
+
+        <!-- 1. ABOUT ME SECTION -->
+        <section id="about">
+            <h2><i class="fa-solid fa-user"></i> About Me</h2>
+            <div class="profile-container">
+                <div class="profile-img-wrapper">
+                    <div class="profile-img-box">
+                        <img id="profile-img" src="fotoprofil.jpeg" alt="Foto Profil">
+                    </div>
+                    <button class="upload-btn" onclick="document.getElementById('upload-profile-input').click()" title="Ganti Foto Profil">
+                        <i class="fa-solid fa-camera"></i>
+                    </button>
+                    <input type="file" id="upload-profile-input" accept="image/*" onchange="previewImage(this, 'profile-img')">
+                </div>
+
+                <div class="profile-info">
+                    <div class="info-grid">
+                        <!-- BARIS 1: NAMA LENGKAP (BESAR & HIGHLIGHT MEMANJANG KE KANAN) -->
+                        <div class="info-card highlight-name">
+                            <strong>Nama Lengkap</strong>
+                            <span class="editable" contenteditable="false">VANIA AZRA RESWARA</span>
+                        </div>
+
+                        <!-- BARIS 2: NIM, PRODI, DAN STATUS DI BAWAHNYA -->
+                        <div class="info-card">
+                            <strong>NIM</strong>
+                            <span class="editable" contenteditable="false">26051214068</span>
+                        </div>
+                        <div class="info-card">
+                            <strong>Program Studi</strong>
+                            <span class="editable" contenteditable="false">S1 SISTEM INFORMASI</span>
+                        </div>
+                        <div class="info-card">
+                            <strong>Status</strong>
+                            <span class="editable" contenteditable="false">Mahasiswa Universitas Negeri Surabaya</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-bio">
+                        <p style="font-size: 0.95rem;"><strong>Deskripsi & Aktivitas:</strong></p>
+                        <p class="editable" contenteditable="false">Halo! Saya mahasiswa baru Teknik Informatika. Saat ini aktif dalam perkuliahan, praktikum coding, serta gemar mempelajari pemetaan logika pemrograman dasar, desain visual UI, dan olah data dokumen.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. WHAT I CAN DO SECTION -->
+        <section id="skills">
+            <h2><i class="fa-solid fa-laptop-code"></i> What I Can Do</h2>
+            <p style="margin-bottom: 20px; color: var(--text-muted); font-size: 0.95rem;">Pilih jenis skill di bawah ini untuk melihat detail keahlian:</p>
+
+            <!-- TAB LEVEL 1: HARD SKILL VS SOFT SKILL -->
+            <div class="main-tabs">
+                <button class="main-btn active" onclick="selectMainSkill('hard', event)">
+                    <i class="fa-solid fa-laptop-code"></i> Hard Skills
+                </button>
+                <button class="main-btn" onclick="selectMainSkill('soft', event)">
+                    <i class="fa-solid fa-users"></i> Soft Skills
+                </button>
+            </div>
+
+            <!-- SUB FILTERS LEVEL 2: KHUSUS HARD SKILL -->
+            <div class="sub-filters" id="hardSkillSubFilters">
+                <button class="sub-btn active" onclick="filterHardSub('programming', event)">
+                    <i class="fa-solid fa-code"></i> Programming & Tools
+                </button>
+                <button class="sub-btn" onclick="filterHardSub('design', event)">
+                    <i class="fa-solid fa-palette"></i> Design & Multimedia
+                </button>
+                <button class="sub-btn" onclick="filterHardSub('office', event)">
+                    <i class="fa-solid fa-file-excel"></i> Office & Data
+                </button>
+            </div>
+
+            <!-- GRID SKILL -->
+            <div class="skills-grid" id="skillsGrid"></div>
+        </section>
+
+        <!-- 3. ACHIEVEMENT SECTION -->
+        <section id="achievement">
+            <h2><i class="fa-solid fa-trophy"></i> Achievement</h2>
+            <p style="margin-bottom: 20px; color: var(--text-muted); font-size: 0.95rem;">Dokumentasi sertifikasi dan pencapaian yang pernah diraih:</p>
+
+            <div class="achievement-card">
+                <div class="achievement-content">
+                    <h3 class="editable" contenteditable="false">Sertifikasi Gemini </h3>
+                    <div class="achievement-meta">
+                        Tahun: <span class="editable" contenteditable="false">2026</span> | 
+                        Penyelenggara: <span class="editable" contenteditable="false"> Google for Education </span>
+                    </div>
+                    <p class="editable" contenteditable="false">Berhasil menunjukkan pengetahuan, keterampilan, dan kompetensi dasar yang diperlukan untuk menggunakan AI Google (Gemini) di lingkungan pendidikan.</p>
+                </div>
+                <div class="achievement-img-box">
+                    <img id="achieve-img-1" src="SertifGemini.png" alt="Bukti Achievement" onclick="openImageModal(this.src)">
+                    <span class="upload-badge" onclick="event.stopPropagation(); document.getElementById('upload-achieve-1').click();">
+                        <i class="fa-solid fa-upload"></i> Upload
+                    </span>
+                    <input type="file" id="upload-achieve-1" accept="image/*" onchange="previewImage(this, 'achieve-img-1')">
+                </div>
+            </div>
+
+            <div class="achievement-card">
+                <div class="achievement-content">
+                    <h3 class="editable" contenteditable="false">Piagam Penghargaan Siswa Berprestasi</h3>
+                    <div class="achievement-meta">
+                        Tahun: <span class="editable" contenteditable="false">2026</span> | 
+                        Penyelenggara: <span class="editable" contenteditable="false"> SMA Negeri 1 Boyolangu </span>
+                    </div>
+                    <p class="editable" contenteditable="false">Diberikan sebagai Siswa Berprestasi Peringkat Ke-10 SMA Negeri 1 Boyolangu Tahun Ajaran 2025/2026 dengan Nilai Akhir 90.36.</p>
+                </div>
+                <div class="achievement-img-box">
+                    <img id="achieve-img-2" src="Penghargaan.jpeg" alt="Bukti Achievement" onclick="openImageModal(this.src)">
+                    <span class="upload-badge" onclick="event.stopPropagation(); document.getElementById('upload-achieve-2').click();">
+                        <i class="fa-solid fa-upload"></i> Upload
+                    </span>
+                    <input type="file" id="upload-achieve-2" accept="image/*" onchange="previewImage(this, 'achieve-img-2')">
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. CONTACT SECTION -->
+        <section id="contact">
+            <h2><i class="fa-solid fa-paper-plane"></i> Contact</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Tertarik untuk berkolaborasi? Hubungi saya melalui media berikut:</p>
+
+            <div class="contact-links">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=vaniaazraa13@gmail.com" target="_blank" class="contact-btn">
+    <i class="fa-solid fa-envelope"></i> Email
+                </a>
+                <a href="https://github.com/vaniaazraa" target="_blank" class="contact-btn olive"><i class="fa-brands fa-github"></i> GitHub</a>
+                <a href="https://www.linkedin.com/in/vania-azra-reswara-16b30a441" target="_blank" class="contact-btn"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+                <a href="https://drive.google.com/file/d/1ik4CTjhNIIEFqu17-dpdh_G4tvPsLPX6/view?usp=drivesdk" download class="contact-btn olive"><i class="fa-solid fa-file-pdf"></i> Download CV</a>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Modal Gambar -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close" onclick="closeModal('imageModal')">&times;</span>
+        <img id="modalImg" src="" alt="Bukti Gambar Besar">
+    </div>
+
+    <!-- Modal Detail Skill -->
+    <div id="skillModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('skillModal')">&times;</span>
+            <h3 id="modalTitle" style="color: var(--primary-maroon); font-size: 1.3rem; margin-bottom: 4px;">Detail Skill</h3>
+            <span id="modalCategory" style="display:inline-block; font-size: 0.75rem; background: var(--sage-light); color: var(--olive-dark); padding: 3px 10px; border-radius: 10px; font-weight: 700; margin-bottom: 12px;">Category</span>
+            <p id="modalDesc" style="font-size: 0.95rem; color: #475569;">Deskripsi skill.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Portofolio Mahasiswa Informatika - Ameliorer Aktif 11</p>
+    </footer>
+
+    <!-- Logic JS -->
+    <script>
+        const hardSkillsData = [
+            { sub: "programming", name: "Python Dasar", category: "Programming", icon: "fa-brands fa-python", desc: "Memahami struktur dasar bahasa Python, sintaks perulangan, percabangan, serta logika dasar alur program." },
+            { sub: "programming", name: "Visual Studio Code", category: "Dev Tools", icon: "fa-solid fa-code", desc: "Menggunakan VS Code sebagai Text Editor utama untuk menulis kode, manajemen ekstensi, dan navigasi file." },
+            { sub: "design", name: "Figma", category: "UI/UX Design", icon: "fa-brands fa-figma", desc: "Membuat wireframe sederhana, tata letak antarmuka (UI Design), dan mendesain prototipe aplikasi Web/Mobile." },
+            { sub: "design", name: "Canva", category: "Graphic Design", icon: "fa-solid fa-paintbrush", desc: "Pembuatan materi presentasi interaktif, poster digital, konten media sosial, dan elemen grafis visual." },
+            { sub: "design", name: "CapCut", category: "Video Editing", icon: "fa-solid fa-video", desc: "Penyuntingan video kreatif, pemotongan klip, pengaturan transisi, pembuatan teks otomatis, dan penambahan audio." },
+            { sub: "office", name: "Microsoft Word", category: "Office Document", icon: "fa-solid fa-file-word", desc: "Penyusunan dokumen formal, penataan format laporan ilmiah/tugas perkuliahan, pembuat daftar isi, dan pengerjaan makalah." },
+            { sub: "office", name: "Microsoft Excel", category: "Data Spreadsheet", icon: "fa-solid fa-file-excel", desc: "Pengolahan data angka menggunakan rumus dasar (SUM, AVERAGE, IF), pembuatan grafik visual, serta penyusunan tabel." },
+            { sub: "office", name: "Google Spreadsheet", category: "Cloud Spreadsheet", icon: "fa-solid fa-table", desc: "Pengolahan data terintegrasi cloud secara kolaboratif bersama tim, penggunaan formula dasar, dan manajemen data online." }
+        ];
+
+        const softSkillsData = [
+            { name: "Kreativitas Visual", category: "Design Thinking", icon: "fa-solid fa-wand-magic-sparkles", desc: "Memiliki kepekaan estetika dalam memadukan warna, tata letak, dan komponen desain untuk kebutuhan visual/presentasi." },
+            { name: "Kerjasama Tim", category: "Social Skill", icon: "fa-solid fa-people-group", desc: "Mampu beradaptasi dan berkomunikasi aktif dalam proyek kelompok maupun pengerjaan tugas bersama." },
+            { name: "Manajemen Waktu", category: "Personal Skill", icon: "fa-solid fa-clock", desc: "Mengatur prioritas pengerjaan tugas kuliah, praktikum coding, serta pengerjaan desain/editing video." },
+            { name: "Kemauan Belajar", category: "Mindset", icon: "fa-solid fa-book-open", desc: "Memiliki rasa ingin tahu yang tinggi untuk mempelajari software, tools baru, dan eksplorasi bahasa pemrograman." }
+        ];
+
+        // Pilihan Utama Level 1
+        function selectMainSkill(type, evt) {
+            document.querySelectorAll('.main-btn').forEach(b => b.classList.remove('active'));
+            if(evt) evt.target.closest('.main-btn').classList.add('active');
+
+            const subFilterBox = document.getElementById('hardSkillSubFilters');
+
+            if (type === 'hard') {
+                subFilterBox.style.display = 'flex';
+                document.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active'));
+                document.querySelector('.sub-btn').classList.add('active');
+                renderHardSkills('programming');
+            } else {
+                subFilterBox.style.display = 'none';
+                renderSoftSkills();
+            }
+        }
+
+        // Sub Filter Level 2
+        function filterHardSub(subType, evt) {
+            document.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active'));
+            if(evt) evt.target.closest('.sub-btn').classList.add('active');
+            renderHardSkills(subType);
+        }
+
+        // Render Kartu Hard Skill
+        function renderHardSkills(subType) {
+            const grid = document.getElementById('skillsGrid');
+            grid.innerHTML = '';
+
+            const list = hardSkillsData.filter(s => s.sub === subType);
+
+            list.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'skill-card';
+                card.onclick = () => openSkillModal(item.name, item.category, item.desc);
+                card.innerHTML = `
+                    <div class="skill-header">
+                        <div class="skill-icon"><i class="${item.icon}"></i></div>
+                        <div class="skill-title">
+                            <h3>${item.name}</h3>
+                            <span>${item.category}</span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Render Kartu Soft Skill
+        function renderSoftSkills() {
+            const grid = document.getElementById('skillsGrid');
+            grid.innerHTML = '';
+
+            softSkillsData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'skill-card';
+                card.onclick = () => openSkillModal(item.name, item.category, item.desc);
+                card.innerHTML = `
+                    <div class="skill-header">
+                        <div class="skill-icon"><i class="${item.icon}"></i></div>
+                        <div class="skill-title">
+                            <h3>${item.name}</h3>
+                            <span>${item.category}</span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Preview Foto Upload
+        function previewImage(input, targetImgId) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById(targetImgId).src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Toggle Mode Edit Teks
+        let isEdit = false;
+        function toggleEditMode() {
+            isEdit = !isEdit;
+            const editables = document.querySelectorAll('.editable');
+            const editBtnText = document.getElementById('edit-text');
+            const mainContent = document.getElementById('main-content');
+
+            if (isEdit) {
+                editables.forEach(el => el.setAttribute('contenteditable', 'true'));
+                mainContent.classList.add('edit-active');
+                editBtnText.innerText = "Simpan Teks";
+                alert("Mode Edit Aktif! Klik teks bertanda garis putus-putus untuk mengubah exhibits/isi teks.");
+            } else {
+                editables.forEach(el => el.setAttribute('contenteditable', 'false'));
+                mainContent.classList.remove('edit-active');
+                editBtnText.innerText = "Mode Edit";
+                alert("Perubahan teks disiapkan/disimpan sementara!");
+            }
+        }
+
+        function openSkillModal(title, category, desc) {
+            if(isEdit) return;
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalCategory').innerText = category;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('skillModal').style.display = 'flex';
+        }
+
+        function openImageModal(imgSrc) {
+            document.getElementById('modalImg').src = imgSrc;
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        // Load awal: tampilkan Hard Skill kategori 'programming'
+        window.onload = function() {
+            renderHardSkills('programming');
+        };
+    </script>
+</body>
+</html>
